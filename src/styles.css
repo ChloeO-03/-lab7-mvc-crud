@@ -120,3 +120,114 @@ body {
     font-weight: 700;
     color: var(--primary);
 }
+
+/* Chat Container */
+.chat-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-md);
+    overflow: hidden;
+}
+
+.chat-messages {
+    height: 500px;
+    overflow-y: auto;
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.chat-messages::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: var(--bg-main);
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: var(--border-dark);
+    border-radius: var(--radius-sm);
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: var(--text-light);
+}
+
+/* Messages */
+
+.message {
+    display: flex;
+    margin-bottom: var(--spacing-md);
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-content {
+    max-width: 70%;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    position: relative;
+}
+
+.user-message {
+    justify-content: flex-end;
+}
+
+.user-message .message-content {
+    background: var(--bg-user);
+    color: var(--text-white);
+    border-bottom-right-radius: var(--radius-sm);
+}
+
+.bot-message {
+    justify-content: flex-start;
+}
+
+.bot-message .message-content {
+    background: var(--bg-bot);
+    color: var(--text-primary);
+    border-bottom-left-radius: var(--radius-sm);
+}
+
+.message-text {
+    word-wrap: break-word;
+    margin-bottom: var(--spacing-md);
+    line-height: 1.5;
+}
+
+.messages-meta {
+    display: flex;
+    gap:var(--spacing-sm);
+    align-items: center;
+    font-size: 0.75rem;
+    margin-top: var(--spacing-md);
+}
+
+.user-message .messages-meta {
+    color: var(--text-secondary);
+}
+
+.message-time {
+    font-size: 0.75rem;
+}
+
+.edited-indicator {
+    font-style: italic;
+    opacity: 0.8;
+}
+
+/* Message Actions */
