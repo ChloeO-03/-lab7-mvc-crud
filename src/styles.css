@@ -231,3 +231,43 @@ body {
 }
 
 /* Message Actions */
+.message-actions {
+    display: flex;
+    gap:var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.message:hover .message.actions {
+    opacity: 1;
+}
+
+.message-actions button {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.75rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.edit-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text-white);
+}
+
+.edit-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.delete-btn {
+    background: rgba(245, 101, 101, 0.2);
+    color: var(--text-white);
+}
+
+.delete-btn:hover {
+    background: (var(--danger));
+    color: var(--text-white);
+}
