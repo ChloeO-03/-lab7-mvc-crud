@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Eliza CHat - MVC CRUD Demo</title>
+    <title>Eliza Chat - MVC CRUD Demo</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!--Header-->
     <header class="app-header">
         <div class="container">
-            <h1> Eliza Chat</h1>
+            <h1>💬 Eliza Chat</h1>
             <p class="subtitle">A therapeutic chatbot using MVC architecture</p>
         </div>
     </header>
@@ -50,7 +50,38 @@
                 >
                 <button type="Submit" class="send-button">Send</button>
             </form>
+            <!--Controls Panel-->
+            <div class="controls-panel">
+                <button id="export-btn" class="control-button">
+                    📥 Export Chat
+                </button>
+                <button id="import-btn" class="control-button">
+                   📤 Import Chat 
+                </button>
+                <button id="clear-btn" class="control-button">
+                    🗑️ Clear All
+                </button>
+                <input
+                    type="file"
+                    id="import-file"
+                    accept=".json"
+                    style="display: none;"
+                >
+
+            </div>
         </div>
     </main>
+
+    <!--Footer-->
+    <footer class="app-footer">
+        <div class="container">
+            <p>
+                Built with MVC architecture |
+                Data persisted with localStorage |
+                <a href="https://github.com/ChloeO-03/-lab7-mvc-crud.git" target="_blank">View Source</a>
+            </p>
+        </div>
+    </footer>
+    <script type="module" src="js/app/js"></script>
 </body>
 </html>
