@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Eliza CHat - MVC CRUD Demo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!--Header-->
+    <header class="app-header">
+        <div class="container">
+            <h1> Eliza Chat</h1>
+            <p class="subtitle">A therapeutic chatbot using MVC architecture</p>
+        </div>
+    </header>
+
+    <!--Main Application-->
+    <main class="app-main">
+        <div class="container">
+
+            <!--Stats Panel-->
+            <div class="state=panel">
+                <div class="stat-card">
+                    <span class="stat-label">Messages</span>
+                    <span class="stat-value" id="message-cont">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Last Saved</span>
+                    <span class="stat-value" id="last-saved">Never</span>
+                </div>
+            </div>
+            <!--Chat Container-->
+            <div class="chat-container">
+                <div id="chat-messages" class="chat-messages">
+                    <!-- Messages will be rendered her by the view-->
+                    <div class="empty-state">
+                        <p>No messages yet. Start a new conversation</p>
+                    </div>
+                </div>
+            </div>
+            <!--Message Input Form-->
+            <form id="message-form" class="message-form">
+                <input
+                type="text"
+                id="message-input"
+                class="message-input"
+                placeholder="Type your message here..."
+                autocomplete="off"
+                required
+                >
+                <button type="Submit" class="send-button">Send</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
