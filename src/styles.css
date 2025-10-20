@@ -1,0 +1,47 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    /* Colors */
+    --primary: #667eea;
+    --primary-dark: #5568d3;
+    --secondary: #764ba2;
+    --success: #48bb78;
+    --danger: #f56565;
+    --warning: #ed8936;
+
+    --bg-main: #f7fafc;
+    --bg-card:#ffffff;
+    --bg-user: #667eea;
+    --bg-bot: #e2e8f0;
+
+    --text-primary:#2d3748;
+    --text-secondary:#718096;
+    --text-light: #a0aec0;
+    --text-white: ffffff;
+
+    --border: #e2e8f0;
+    --border-dark:#cbd5e0;
+
+    /* Spacing */
+    --spacing-xs:0.25rem;
+    --spacing-sm:0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+
+    /* Border Radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
