@@ -5,7 +5,7 @@
  */
 import ChatModel from './model.js';
 import ChatView from './view.js';
-import { getBotResponse } from './eliza.js';  // Changed from getElizaResponse
+import { getBotResponse } from './eliza.js';
 
 class ChatController {
   constructor() {
@@ -27,7 +27,6 @@ class ChatController {
     this.view.onClearAll = this.handleClearAll.bind(this);
     this.view.onExport = this.handleExport.bind(this);
     this.view.onImport = this.handleImport.bind(this);
-    this.view.onCancelEdit = this.handleCancelEdit.bind(this);
 
     // Set up View event listeners
     this.view.bindEvents();
@@ -68,7 +67,7 @@ class ChatController {
       this.model.create(text, true);
 
       // Get bot response using Eliza
-      const botResponse = getBotResponse(text);  // Changed from getElizaResponse
+      const botResponse = getBotResponse(text);
 
       // Add bot response after a short delay (more natural)
       setTimeout(() => {
@@ -177,15 +176,6 @@ class ChatController {
       console.error('Error importing chat:', error);
       this.view.showError('Failed to import chat: ' + error.message);
     }
-  }
-
-  /**
-   * Handle canceling edit mode
-   */
-  handleCancelEdit() {
-    // Just re-render current state
-    const messages = this.model.getAll();
-    this.view.renderMessages(messages);
   }
 
   /**

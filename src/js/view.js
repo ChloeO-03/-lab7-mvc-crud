@@ -29,6 +29,8 @@ class ChatView {
    * Controller will set the handler functions
    */
   bindEvents() {
+    console.log('View: Binding events');
+    
     // Form submission
     if (this.messageForm && this.onMessageSubmit) {
       this.messageForm.addEventListener('submit', (e) => {
@@ -86,8 +88,6 @@ class ChatView {
       this.chatContainer.addEventListener('click', (e) => {
         const deleteBtn = e.target.closest('.delete-btn');
         const editBtn = e.target.closest('.edit-btn');
-        const saveBtn = e.target.closest('.save-btn');
-        const cancelBtn = e.target.closest('.cancel-btn');
 
         if (deleteBtn) {
           const messageId = deleteBtn.dataset.messageId;
@@ -97,12 +97,6 @@ class ChatView {
         } else if (editBtn) {
           const messageId = editBtn.dataset.messageId;
           this._enterEditMode(messageId);
-        } else if (saveBtn) {
-          const messageId = saveBtn.dataset.messageId;
-          this._saveEdit(messageId);
-        } else if (cancelBtn) {
-          const messageId = cancelBtn.dataset.messageId;
-          this._cancelEdit(messageId);
         }
       });
     }
@@ -165,6 +159,7 @@ class ChatView {
     // Metadata (timestamp and edited indicator)
     const metaDiv = document.createElement('div');
     metaDiv.className = 'message-meta';
+    
     const timeSpan = document.createElement('span');
     timeSpan.className = 'message-time';
     timeSpan.textContent = this._formatTimestamp(message.timestamp);
@@ -206,7 +201,7 @@ class ChatView {
   }
 
   /**
-   * Enter edit mode for a message
+   * Enter edit mode for a message (simplified with prompt)
    * @private
    * @param {string} messageId - Message ID
    */
@@ -215,68 +210,12 @@ class ChatView {
     if (!messageElement) return;
 
     const textDiv = messageElement.querySelector('.message-text');
-    const actionsDiv = messageElement.querySelector('.message-actions');
     const currentText = textDiv.textContent;
-
-    // Create edit interface
-    const editInput = document.createElement('textarea');
-    editInput.className = 'edit-input';
-    editInput.value = currentText;
-    editInput.rows = 3;
-
-    const editActions = document.createElement('div');
-    editActions.className = 'edit-actions';
-
-    const saveBtn = document.createElement('button');
-    saveBtn.className = 'save-btn';
-    saveBtn.dataset.messageId = messageId;
-    saveBtn.textContent = 'Save';
-
-    const cancelBtn = document.createElement('button');
-    cancelBtn.className = 'cancel-btn';
-    cancelBtn.dataset.messageId = messageId;
-    cancelBtn.textContent = 'Cancel';
-
-    editActions.appendChild(saveBtn);
-    editActions.appendChild(cancelBtn);
-
-    // Replace content with edit interface
-    textDiv.replaceWith(editInput);
-    actionsDiv.replaceWith(editActions);
-
-    editInput.focus();
-    editInput.select();
-  }
-
-  /**
-   * Save edit and exit edit mode
-   * @private
-   * @param {string} messageId - Message ID
-   */
-  _saveEdit(messageId) {
-    const messageElement = this.chatContainer.querySelector(`[data-message-id="${messageId}"]`);
-    if (!messageElement) return;
-
-    const editInput = messageElement.querySelector('.edit-input');
-    const newText = editInput.value.trim();
-
-    if (newText && this.onMessageEdit) {
+    
+    const newText = prompt('Edit message:', currentText);
+    
+    if (newText && newText.trim() && this.onMessageEdit) {
       this.onMessageEdit(messageId, newText);
-    } else if (!newText) {
-      alert('Message cannot be empty');
-    }
-  }
-
-  /**
-   * Cancel edit and restore original view
-   * @private
-   * @param {string} messageId - Message ID
-   */
-  _cancelEdit(messageId) {
-    // Just re-render all messages to restore state
-    // Controller should have the current state
-    if (this.onCancelEdit) {
-      this.onCancelEdit();
     }
   }
 
@@ -306,15 +245,7 @@ class ChatView {
    */
   _formatTimestamp(timestamp) {
     const date = new Date(timestamp);
-    const now = new Date();
-    const diffMs = now - date;
-    const diffMins = Math.floor(diffMs / 60000);
-
-    if (diffMins < 1) return 'Just now';
-    if (diffMins < 60) return `${diffMins} min ago`;
-    if (diffMins < 1440) return `${Math.floor(diffMins / 60)} hours ago`;
-    
-    // Show full date if older
+    // Show full date and time
     return date.toLocaleString();
   }
 
@@ -350,7 +281,6 @@ class ChatView {
    * @param {string} message - Success message
    */
   showSuccess(message) {
-    // You could implement a toast notification here
     console.log('Success:', message);
   }
 
