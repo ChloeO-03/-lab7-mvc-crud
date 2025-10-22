@@ -1,7 +1,5 @@
-# lab7-mvc-crud
-COMP 305 Fall 2025
-
 # Lab 7: MVC CRUD Chat Application
+COMP 305 Fall 2025
 
 ## Overview
 This project implements a chat application using the Model-View-Controller (MVC) architectural pattern with full CRUD operations. The application features an Eliza-style chatbot with localStorage persistence, demonstrating separation of concerns and the observer pattern.
