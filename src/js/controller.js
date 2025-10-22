@@ -5,7 +5,7 @@
  */
 import ChatModel from './model.js';
 import ChatView from './view.js';
-import { getElizaResponse } from './eliza.js';
+import { getBotResponse } from './eliza.js';  // Changed from getElizaResponse
 
 class ChatController {
   constructor() {
@@ -68,7 +68,7 @@ class ChatController {
       this.model.create(text, true);
 
       // Get bot response using Eliza
-      const botResponse = getElizaResponse(text);
+      const botResponse = getBotResponse(text);  // Changed from getElizaResponse
 
       // Add bot response after a short delay (more natural)
       setTimeout(() => {
