@@ -165,3 +165,205 @@ class ChatView {
     // Metadata (timestamp and edited indicator)
     const metaDiv = document.createElement('div');
     metaDiv.className = 'message-meta';
+    const timeSpan = document.createElement('span');
+    timeSpan.className = 'message-time';
+    timeSpan.textContent = this._formatTimestamp(message.timestamp);
+    metaDiv.appendChild(timeSpan);
+
+    if (message.edited) {
+      const editedSpan = document.createElement('span');
+      editedSpan.className = 'edited-indicator';
+      editedSpan.textContent = '(edited)';
+      metaDiv.appendChild(editedSpan);
+    }
+
+    contentDiv.appendChild(metaDiv);
+
+    // Actions (only for user messages)
+    if (message.isUser) {
+      const actionsDiv = document.createElement('div');
+      actionsDiv.className = 'message-actions';
+
+      const editBtn = document.createElement('button');
+      editBtn.className = 'edit-btn';
+      editBtn.dataset.messageId = message.id;
+      editBtn.textContent = 'Edit';
+      editBtn.setAttribute('aria-label', 'Edit message');
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.className = 'delete-btn';
+      deleteBtn.dataset.messageId = message.id;
+      deleteBtn.textContent = 'Delete';
+      deleteBtn.setAttribute('aria-label', 'Delete message');
+
+      actionsDiv.appendChild(editBtn);
+      actionsDiv.appendChild(deleteBtn);
+      contentDiv.appendChild(actionsDiv);
+    }
+
+    messageDiv.appendChild(contentDiv);
+    return messageDiv;
+  }
+
+  /**
+   * Enter edit mode for a message
+   * @private
+   * @param {string} messageId - Message ID
+   */
+  _enterEditMode(messageId) {
+    const messageElement = this.chatContainer.querySelector(`[data-message-id="${messageId}"]`);
+    if (!messageElement) return;
+
+    const textDiv = messageElement.querySelector('.message-text');
+    const actionsDiv = messageElement.querySelector('.message-actions');
+    const currentText = textDiv.textContent;
+
+    // Create edit interface
+    const editInput = document.createElement('textarea');
+    editInput.className = 'edit-input';
+    editInput.value = currentText;
+    editInput.rows = 3;
+
+    const editActions = document.createElement('div');
+    editActions.className = 'edit-actions';
+
+    const saveBtn = document.createElement('button');
+    saveBtn.className = 'save-btn';
+    saveBtn.dataset.messageId = messageId;
+    saveBtn.textContent = 'Save';
+
+    const cancelBtn = document.createElement('button');
+    cancelBtn.className = 'cancel-btn';
+    cancelBtn.dataset.messageId = messageId;
+    cancelBtn.textContent = 'Cancel';
+
+    editActions.appendChild(saveBtn);
+    editActions.appendChild(cancelBtn);
+
+    // Replace content with edit interface
+    textDiv.replaceWith(editInput);
+    actionsDiv.replaceWith(editActions);
+
+    editInput.focus();
+    editInput.select();
+  }
+
+  /**
+   * Save edit and exit edit mode
+   * @private
+   * @param {string} messageId - Message ID
+   */
+  _saveEdit(messageId) {
+    const messageElement = this.chatContainer.querySelector(`[data-message-id="${messageId}"]`);
+    if (!messageElement) return;
+
+    const editInput = messageElement.querySelector('.edit-input');
+    const newText = editInput.value.trim();
+
+    if (newText && this.onMessageEdit) {
+      this.onMessageEdit(messageId, newText);
+    } else if (!newText) {
+      alert('Message cannot be empty');
+    }
+  }
+
+  /**
+   * Cancel edit and restore original view
+   * @private
+   * @param {string} messageId - Message ID
+   */
+  _cancelEdit(messageId) {
+    // Just re-render all messages to restore state
+    // Controller should have the current state
+    if (this.onCancelEdit) {
+      this.onCancelEdit();
+    }
+  }
+
+  /**
+   * Update statistics display
+   * @private
+   * @param {number} count - Message count
+   * @param {number} timestamp - Last message timestamp
+   */
+  _updateStats(count, timestamp) {
+    if (this.messageCount) {
+      this.messageCount.textContent = count;
+    }
+
+    if (this.lastSaved && timestamp) {
+      this.lastSaved.textContent = this._formatTimestamp(timestamp);
+    } else if (this.lastSaved) {
+      this.lastSaved.textContent = 'Never';
+    }
+  }
+
+  /**
+   * Format timestamp to readable string
+   * @private
+   * @param {number} timestamp - Unix timestamp
+   * @returns {string} Formatted time
+   */
+  _formatTimestamp(timestamp) {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffMins = Math.floor(diffMs / 60000);
+
+    if (diffMins < 1) return 'Just now';
+    if (diffMins < 60) return `${diffMins} min ago`;
+    if (diffMins < 1440) return `${Math.floor(diffMins / 60)} hours ago`;
+    
+    // Show full date if older
+    return date.toLocaleString();
+  }
+
+  /**
+   * Scroll chat container to bottom
+   * @private
+   */
+  _scrollToBottom() {
+    if (this.chatContainer) {
+      this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
+    }
+  }
+
+  /**
+   * Show loading state
+   */
+  showLoading() {
+    if (this.chatContainer) {
+      this.chatContainer.innerHTML = '<div class="loading">Loading messages...</div>';
+    }
+  }
+
+  /**
+   * Show error message
+   * @param {string} message - Error message
+   */
+  showError(message) {
+    alert('Error: ' + message);
+  }
+
+  /**
+   * Show success message
+   * @param {string} message - Success message
+   */
+  showSuccess(message) {
+    // You could implement a toast notification here
+    console.log('Success:', message);
+  }
+
+  /**
+   * Disable/enable input
+   * @param {boolean} disabled - Whether to disable input
+   */
+  setInputDisabled(disabled) {
+    if (this.messageInput) {
+      this.messageInput.disabled = disabled;
+    }
+  }
+}
+
+// Export for use in other modules
+export default ChatView;
