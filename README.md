@@ -5,7 +5,7 @@ COMP 305 Fall 2025
 This project implements a chat application using the Model-View-Controller (MVC) architectural pattern with full CRUD operations. The application features an Eliza-style chatbot with localStorage persistence, demonstrating separation of concerns and the observer pattern.
 
 ## Live Demo
-- [Deployed Application](https://your-app-url.netlify.app/)
+- [Deployed Application](lab7-mvc-crud.netlify.app)
 - [GitHub Repository](https://github.com/ChloeO-03/-lab7-mvc-crud)
 
 ## Technologies Used
