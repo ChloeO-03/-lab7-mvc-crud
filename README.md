@@ -6,7 +6,7 @@ This project implements a chat application using the Model-View-Controller (MVC)
 
 ## Live Demo
 - [Deployed Application](https://your-app-url.netlify.app/)
-- [GitHub Repository](https://github.com/yourusername/lab7-mvc-crud)
+- [GitHub Repository](https://github.com/ChloeO-03/-lab7-mvc-crud)
 
 ## Technologies Used
 - HTML5, CSS3 (Flexbox, Grid, Animations)
